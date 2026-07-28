@@ -397,6 +397,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#fix-applied-soname-exact-closure-completion-pkgm-637f6db-2026-07-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix applied — soname-exact closure completion (pkgm 637f6db, 2026-07-28)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#missing-unresolved-shared-library-41" class="md-nav__link">
     <span class="md-ellipsis">
       MISSING — unresolved shared library (41)
@@ -539,6 +548,15 @@
   <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-applied-soname-exact-closure-completion-pkgm-637f6db-2026-07-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix applied — soname-exact closure completion (pkgm 637f6db, 2026-07-28)
     </span>
   </a>
   
@@ -897,6 +915,58 @@ out on <code>--version</code> (mostly tools with no <code>--version</code> flag,
 — none of these are FROM-scratch failures. The real, actionable gaps are
 <strong>41 MISSING + 40 DLFAIL + 4 SIGSEGV = 85 projects (4.7%)</strong>; the other 1733
 (95.3%) either ran or launched their closure cleanly.</p>
+<h3 id="fix-applied-soname-exact-closure-completion-pkgm-637f6db-2026-07-28">Fix applied — soname-exact closure completion (pkgm <code>637f6db</code>, 2026-07-28)<a class="headerlink" href="#fix-applied-soname-exact-closure-completion-pkgm-637f6db-2026-07-28" title="Permanent link">&para;</a></h3>
+<p>Re-running the 81 MISSING + DLFAIL projects after the fix, <strong>73 now run FROM
+scratch</strong> (25 exit 0, 48 launch their closure and return non-zero/timeout on
+<code>--version</code> — not failures). <strong>All 40 DLFAIL are resolved</strong>; MISSING drops from
+41 to 8.</p>
+<p>Root cause: the closure completer mapped an unsatisfied soname to its provider
+project and pulled that project's <strong>latest</strong> bottle — but a soname carries an
+ABI version a newer release may have moved past (a binary needs
+<code>libxml2.so.2</code>, yet libxml2 2.15 ships <code>libxml2.so.16</code>; <code>libssl.so.1.1</code> is
+openssl 1.1.x while the latest is 3.x). The provider was often already present
+as a declared dep at the wrong version, so completion skipped it. The fix walks
+the provider's versions and installs the newest that ships the <strong>exact</strong> soname
+(prioritising versions whose leading number matches the soname's ABI tail, so
+<code>libssl.so.1.1</code> finds openssl 1.1.1w directly); the drifted and latest bottles
+coexist on <code>LD_LIBRARY_PATH</code>. Ten soname mappings were also added (libFLAC,
+libtheora, libgit2, libcbor, libavro, libprotoc, libclang, libtinfow,
+libgflags, and the libboost prefix).</p>
+<p>The <strong>8 still-MISSING</strong> are not closure-completion gaps pkgm can close:</p>
+<table>
+<thead>
+<tr>
+<th>project(s)</th>
+<th>soname</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com</td>
+<td><code>libudev.so.1</code></td>
+<td>systemd/udev — <strong>no pantry bottle provides it</strong></td>
+</tr>
+<tr>
+<td>clickhouse.com</td>
+<td><code>librt.so.1</code></td>
+<td>modern glibc merged <code>librt</code> into <code>libc</code>; no standalone <code>librt.so.1</code> is shipped</td>
+</tr>
+<tr>
+<td>ladspa.org</td>
+<td><em>(none)</em></td>
+<td>its <code>analyseplugin</code> treats <code>--version</code> as a plugin <strong>name</strong> to <code>dlopen</code> — a probe artifact, the tool itself runs</td>
+</tr>
+<tr>
+<td>tailwindcss.com</td>
+<td><em>(none)</em></td>
+<td>a Bun single-file binary that self-extracts a native <code>lightningcss</code> <code>.node</code> module to a virtual <code>$bunfs</code> at runtime — a Bun packaging quirk, not a pantry closure gap</td>
+</tr>
+</tbody>
+</table>
+<p>So of the 85 original gaps, the fix closes ~73; the residue is 5 udev + 1
+librt (genuine pantry/glibc gaps), 1 Bun quirk, 1 probe artifact, and the 4
+SIGSEGV (a separate crash class, not addressed here).</p>
 <h3 id="missing-unresolved-shared-library-41">MISSING — unresolved shared library (41)<a class="headerlink" href="#missing-unresolved-shared-library-41" title="Permanent link">&para;</a></h3>
 <p>The closure did not provide a <code>.so</code> the binary needs. Each is actionable: the
 soname either needs a <code>soname → project</code> mapping in <code>closure.go</code>, or the pantry
