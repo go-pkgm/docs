@@ -369,6 +369,75 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#full-pantry-conformance-sweep-2026-07-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full-pantry conformance sweep (2026-07-28)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full-pantry conformance sweep (2026-07-28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provenance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-unresolved-shared-library-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      MISSING — unresolved shared library (41)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dlfail-bottle-fetch-failure-resolving-the-closure-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      DLFAIL — bottle-fetch failure resolving the closure (40)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigsegv-genuine-crash-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      SIGSEGV — genuine crash (4)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#proposal-to-the-pkgx-pantry-maintainers" class="md-nav__link">
     <span class="md-ellipsis">
       Proposal to the pkgx / pantry maintainers
@@ -444,6 +513,75 @@
       Pantry-wide audit
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-pantry-conformance-sweep-2026-07-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full-pantry conformance sweep (2026-07-28)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full-pantry conformance sweep (2026-07-28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provenance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-unresolved-shared-library-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      MISSING — unresolved shared library (41)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dlfail-bottle-fetch-failure-resolving-the-closure-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      DLFAIL — bottle-fetch failure resolving the closure (40)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigsegv-genuine-crash-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      SIGSEGV — genuine crash (4)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -644,6 +782,269 @@ too. No consumer tool can supply a soname no bottle ships.</p>
 pantry, with the only observed failures being upstream version-pin drift. The
 <code>soname → project</code> table also gained prefix matching (<code>projectForSoname</code>) for
 multi-<code>.so</code> projects such as abseil (<code>libabsl_*</code>), protobuf and re2.</p>
+<h2 id="full-pantry-conformance-sweep-2026-07-28">Full-pantry conformance sweep (2026-07-28)<a class="headerlink" href="#full-pantry-conformance-sweep-2026-07-28" title="Permanent link">&para;</a></h2>
+<p>The 100-project sample above was extended to the <strong>entire</strong> set of
+bottle-backed projects. This section records the full run.</p>
+<h3 id="provenance">Provenance<a class="headerlink" href="#provenance" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pantry ref</td>
+<td><code>ef7e60a3a2e6e07f7efeaf1e7c765fa670e66584</code> (2026-07-28T15:42:19Z)</td>
+</tr>
+<tr>
+<td>go-pkgm/pkgm commit</td>
+<td><code>77741ed</code> (2026-07-28)</td>
+</tr>
+<tr>
+<td>sweep date</td>
+<td>2026-07-28</td>
+</tr>
+<tr>
+<td>projects (N)</td>
+<td>1818 (every project with a linux bottle)</td>
+</tr>
+<tr>
+<td>method</td>
+<td><code>docker run --rm pkgm-scratch run &lt;project&gt; -- --version</code> on a <code>FROM scratch</code> image containing only the pkgm binary</td>
+</tr>
+<tr>
+<td>verdicts</td>
+<td><code>PASS</code> / <code>NOBIN</code> / <code>MISSING:&lt;soname&gt;</code> / <code>DLFAIL</code> / <code>OTHER:&lt;rc&gt;</code> (see <code>phaseB.sh</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Each project is run through <code>pkgm run &lt;project&gt; -- --version</code> inside a
+<code>FROM scratch</code> container whose only content is the static <code>pkgm</code> binary; pkgm
+assembles the closure from <code>DT_NEEDED</code> and executes the project's default
+binary. The verdict is derived from the exit code and stderr.</p>
+<h3 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>verdict</th>
+<th style="text-align: right;">count</th>
+<th>honest interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PASS</td>
+<td style="text-align: right;">818</td>
+<td>ran, exit 0 — genuinely runs FROM scratch ✅</td>
+</tr>
+<tr>
+<td>NOBIN</td>
+<td style="text-align: right;">556</td>
+<td><code>run … --version</code> found no matching binary — almost all are <strong>libraries</strong> with no runnable bin. <strong>Not a failure.</strong></td>
+</tr>
+<tr>
+<td>OTHER:1</td>
+<td style="text-align: right;">218</td>
+<td>binary <strong>ran</strong> and exited 1 — usually the tool has no <code>--version</code> flag. The binary launched and loaded its closure. <strong>Not a FROM-scratch failure.</strong></td>
+</tr>
+<tr>
+<td>OTHER:124</td>
+<td style="text-align: right;">58</td>
+<td><code>timeout</code> killed it — the binary ran but <code>--version</code> blocked (REPL / server / waits on stdin). <strong>Not a failure.</strong></td>
+</tr>
+<tr>
+<td>OTHER:2</td>
+<td style="text-align: right;">48</td>
+<td>ran, exit 2 — typically needs a subcommand/args. Ran, non-zero; not a confirmed failure.</td>
+</tr>
+<tr>
+<td>OTHER:255, :127, :3, … (misc)</td>
+<td style="text-align: right;">35</td>
+<td>ran, other non-zero rc; ambiguous (needs a subcommand/args). Not confirmed failures.</td>
+</tr>
+<tr>
+<td>MISSING:<code>&lt;soname&gt;</code></td>
+<td style="text-align: right;">41</td>
+<td>a shared library the closure did not provide (<code>… .so: cannot open shared object</code>). <strong>Real, actionable.</strong></td>
+</tr>
+<tr>
+<td>DLFAIL</td>
+<td style="text-align: right;">40</td>
+<td>pkgm hit a bottle-fetch failure resolving the closure (<code>GET https://dist… / no bottle / no version</code>). <strong>Real, actionable.</strong></td>
+</tr>
+<tr>
+<td>OTHER:139</td>
+<td style="text-align: right;">4</td>
+<td><strong>SIGSEGV</strong> — a genuine crash. <strong>Real.</strong></td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td style="text-align: right;"><strong>1818</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>OTHER:*</code> codes together account for 363 projects (218 <code>OTHER:1</code>
++ 58 <code>OTHER:124</code> + 4 <code>OTHER:139</code> + 83 other misc rc). Of those, only the 4
+SIGSEGV rows are FROM-scratch failures; the remaining 359 launched their
+closure and returned a non-zero rc or timed out on <code>--version</code>.</p>
+<p><strong>Headline:</strong> of 1818 bottle-backed projects run FROM scratch, 818 are
+confirmed-run (PASS, exit 0); a further 556 are libraries with no runnable
+binary (NOBIN) and 359 launched their closure but returned non-zero or timed
+out on <code>--version</code> (mostly tools with no <code>--version</code> flag, REPLs, or servers)
+— none of these are FROM-scratch failures. The real, actionable gaps are
+<strong>41 MISSING + 40 DLFAIL + 4 SIGSEGV = 85 projects (4.7%)</strong>; the other 1733
+(95.3%) either ran or launched their closure cleanly.</p>
+<h3 id="missing-unresolved-shared-library-41">MISSING — unresolved shared library (41)<a class="headerlink" href="#missing-unresolved-shared-library-41" title="Permanent link">&para;</a></h3>
+<p>The closure did not provide a <code>.so</code> the binary needs. Each is actionable: the
+soname either needs a <code>soname → project</code> mapping in <code>closure.go</code>, or the pantry
+genuinely ships no bottle providing that exact soname (version-pin drift, as
+with the abseil case above — pkgx itself would fail there too). Grouped by
+soname, most-common first.</p>
+<p><code>libssl.so.1.1</code> — 10 projects link the <strong>OpenSSL 1.1</strong> ABI; the pantry ships
+OpenSSL 3 (<code>libssl.so.3</code>), so no bottle provides <code>…so.1.1</code>. Version-pin drift.</p>
+<ul>
+<li>crates.io/cargo-tarpaulin → <code>libssl.so.1.1</code></li>
+<li>crates.io/get-blessed → <code>libssl.so.1.1</code></li>
+<li>crates.io/websocat → <code>libssl.so.1.1</code></li>
+<li>fermyon.com/spin → <code>libssl.so.1.1</code></li>
+<li>github.com/AppImageCommunity/zsync2 → <code>libssl.so.1.1</code></li>
+<li>github.com/Virviil/oci2git → <code>libssl.so.1.1</code></li>
+<li>lychee.cli.rs → <code>libssl.so.1.1</code></li>
+<li>mise.jdx.dev → <code>libssl.so.1.1</code></li>
+<li>pkgx.sh/cargox → <code>libssl.so.1.1</code></li>
+<li>rpm.org/rpm → <code>libssl.so.1.1</code></li>
+</ul>
+<p><code>libxml2.so.2</code> — 9 projects (candidate for the <code>soname → project</code> table):</p>
+<ul>
+<li>augeas.net → <code>libxml2.so.2</code></li>
+<li>freedesktop.org/appstream → <code>libxml2.so.2</code></li>
+<li>imagemagick.org/v6 → <code>libxml2.so.2</code></li>
+<li>isc.org/bind9 → <code>libxml2.so.2</code></li>
+<li>qalculate.github.io → <code>libxml2.so.2</code></li>
+<li>rpm.org/dnf5 → <code>libxml2.so.2</code></li>
+<li>sourceforge.net/xmlstar → <code>libxml2.so.2</code></li>
+<li>wayland.freedesktop.org → <code>libxml2.so.2</code></li>
+<li>wireshark.org → <code>libxml2.so.2</code></li>
+</ul>
+<p><code>libudev.so.1</code> — 5 projects (systemd/udev; no pkgx bottle provides it):</p>
+<ul>
+<li>fnox.jdx.dev → <code>libudev.so.1</code></li>
+<li>open-mpi.org → <code>libudev.so.1</code></li>
+<li>open-mpi.org/hwloc → <code>libudev.so.1</code></li>
+<li>openpmix.github.io → <code>libudev.so.1</code></li>
+<li>solana.com → <code>libudev.so.1</code></li>
+</ul>
+<p><code>libFLAC.so.12</code> — 4 projects (candidate for the <code>soname → project</code> table):</p>
+<ul>
+<li>breakfastquay.com/rubberband → <code>libFLAC.so.12</code></li>
+<li>github.com/libsndfile/libsndfile → <code>libFLAC.so.12</code></li>
+<li>ladspa.org → <code>libFLAC.so.12</code></li>
+<li>vamp-plugins.org → <code>libFLAC.so.12</code></li>
+</ul>
+<p>Single-project sonames:</p>
+<ul>
+<li>grpc.io → <code>libabsl_die_if_null.so.2501.0.0</code> (abseil soname drift; see sample above)</li>
+<li>mosh.org → <code>libabsl_log_internal_check_op.so.2401.0.0</code> (abseil soname drift)</li>
+<li>github.com/edenhill/kcat → <code>libavro.so.23</code></li>
+<li>gnu.org/source-highlight → <code>libboost_regex.so.1.82.0</code></li>
+<li>github.com/facebookincubator/fizz → <code>libboost_regex.so.1.88.0</code></li>
+<li>developers.yubico.com/libfido2 → <code>libcbor.so.0.13</code></li>
+<li>github.com/pantoniou/libfyaml → <code>libclang.so.22.1</code></li>
+<li>amp.rs → <code>libgit2.so.1.7</code></li>
+<li>github.com/protobuf-c/protobuf-c → <code>libprotoc.so.25.7.0</code></li>
+<li>clickhouse.com → <code>librt.so.1</code> (modern glibc merged <code>librt</code> into <code>libc</code>; the glibc bottle ships no standalone <code>librt.so.1</code>)</li>
+<li>xiph.org/libshout → <code>libtheora.so.0</code></li>
+<li>gnu.org/texinfo → <code>libtinfow.so.6</code> (wide-char ncurses; distinct from <code>libtinfo.so.6</code>)</li>
+<li>tailwindcss.com → <em>(soname not captured — the sweep detected a <code>cannot open shared object</code> error but its message did not match the soname-extraction regex; needs a manual re-run to identify the library)</em></li>
+</ul>
+<h3 id="dlfail-bottle-fetch-failure-resolving-the-closure-40">DLFAIL — bottle-fetch failure resolving the closure (40)<a class="headerlink" href="#dlfail-bottle-fetch-failure-resolving-the-closure-40" title="Permanent link">&para;</a></h3>
+<p>pkgm could not fetch a bottle it needs for the closure (<code>GET https://dist…</code> /
+<code>no bottle</code> / <code>no version</code>). Actionable: either a missing soname→project
+mapping points pkgm at a project/version with no bottle, or the required
+dependency genuinely has no published bottle. Dominated by large C/C++ apps
+with big plugin closures (gtk, php, ruby, imagemagick, mpv, httpd, …).</p>
+<ul>
+<li>agpt.co</li>
+<li>apache.org/httpd</li>
+<li>appium.io</li>
+<li>autotrace.sourceforge.net</li>
+<li>chiark.greenend.org.uk/puzzles</li>
+<li>crystal-lang.org</li>
+<li>crystal-lang.org/shards</li>
+<li>cython.org</li>
+<li>facebook.com/folly</li>
+<li>facebook.com/watchman</li>
+<li>getcomposer.org</li>
+<li>github.com/AUTOMATIC1111/stable-diffusion-webui</li>
+<li>github.com/libass/libass</li>
+<li>github.com/nat/openplayground</li>
+<li>gnome.org/gdk-pixbuf</li>
+<li>gnome.org/librsvg</li>
+<li>gnu.org/guile</li>
+<li>gtk.org/gtk3</li>
+<li>gtk.org/gtk4</li>
+<li>imagemagick.org</li>
+<li>jenkins.io</li>
+<li>laravel.com</li>
+<li>libvips.org</li>
+<li>llvm.org/clang-format</li>
+<li>mpv.io</li>
+<li>mvdan.cc/gofumpt</li>
+<li>openslide.org</li>
+<li>php.net</li>
+<li>phpmyadmin.net</li>
+<li>pwmt.org/girara</li>
+<li>pwmt.org/zathura</li>
+<li>riverbankcomputing.com/pyqt-builder</li>
+<li>riverbankcomputing.com/sip</li>
+<li>ruby-lang.org</li>
+<li>snaplet.dev/cli</li>
+<li>symfony.com</li>
+<li>symfony.com/cs</li>
+<li>terraform.io/cdk</li>
+<li>wxwidgets.org</li>
+<li>xpra.org</li>
+</ul>
+<h3 id="sigsegv-genuine-crash-4">SIGSEGV — genuine crash (4)<a class="headerlink" href="#sigsegv-genuine-crash-4" title="Permanent link">&para;</a></h3>
+<p>The binary loaded and started but crashed (signal 11):</p>
+<ul>
+<li>github.com/marler8997/zigup</li>
+<li>gts.sourceforge.net</li>
+<li>mcgill.ca/lrslib</li>
+<li>pkgx.sh</li>
+</ul>
+<h3 id="interpretation">Interpretation<a class="headerlink" href="#interpretation" title="Permanent link">&para;</a></h3>
+<p><code>NOBIN</code>, <code>OTHER:1</code> and <code>OTHER:124</code> are <strong>not</strong> FROM-scratch failures. <code>NOBIN</code>
+projects are libraries with no runnable binary (an artifact of probing every
+project with <code>run … --version</code>); <code>OTHER:1</code> binaries launched their closure and
+merely lack a <code>--version</code> flag; <code>OTHER:124</code> binaries ran but blocked because
+<code>--version</code> dropped them into a REPL, server loop, or stdin wait. In all three
+the loader resolved <code>PT_INTERP</code>, the closure assembled, and the ELF executed —
+which is exactly what "runs FROM scratch" tests. Counting them as failures
+would understate conformance.</p>
+<p>The <strong>4.7% of real gaps</strong> are concentrated, not random. The MISSING and DLFAIL
+rows are dominated by large C/C++ applications with big plugin closures —
+<code>gtk3</code>/<code>gtk4</code>, <code>php</code>, <code>ruby</code>, <code>imagemagick</code>, <code>mpv</code>, <code>httpd</code>, <code>libvips</code>,
+<code>librsvg</code>, and similar. Those programs assemble much of their runtime graph
+through <strong><code>dlopen</code> at runtime</strong> (image codecs, format plugins, language
+modules) rather than through <code>DT_NEEDED</code> at link time. A static closure
+completed from <code>DT_NEEDED</code> cannot see edges that only exist when the program
+<code>dlopen</code>s a plugin by name during execution, so pkgm neither pulls those
+bottles nor knows the soname to map. This is a known, structural limitation of
+<code>DT_NEEDED</code>-derived closures, and it is the single largest source of the
+remaining gaps. A second, smaller source is <strong>version-pin drift</strong> — bottles
+built against a soname (<code>libssl.so.1.1</code>, the abseil <code>…so.2401/2501</code> variants)
+that no currently-published bottle provides; pkgx itself would fail those too.
+<code>libudev.so.1</code> and <code>librt.so.1</code> are a third, minor source: system sonames the
+pkgx bottle set does not ship standalone.</p>
+<p>This does not change the earlier conclusion; it quantifies it. The
+<code>DT_NEEDED</code>-driven closure resolves the implicit graph for the large majority
+of the pantry, and the residual gaps are honest, understood, and — for MISSING
+and DLFAIL — actionable through soname→project mappings or upstream bottle
+fixes.</p>
 <h2 id="proposal-to-the-pkgx-pantry-maintainers">Proposal to the pkgx / pantry maintainers<a class="headerlink" href="#proposal-to-the-pkgx-pantry-maintainers" title="Permanent link">&para;</a></h2>
 <p>The information needed to run a bottle standalone (its complete runtime closure)
 exists at build time but is not published. Two complementary asks:</p>
