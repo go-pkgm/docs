@@ -144,6 +144,39 @@ out on `--version` (mostly tools with no `--version` flag, REPLs, or servers)
 **41 MISSING + 40 DLFAIL + 4 SIGSEGV = 85 projects (4.7%)**; the other 1733
 (95.3%) either ran or launched their closure cleanly.
 
+### Fix applied — soname-exact closure completion (pkgm `637f6db`, 2026-07-28)
+
+Re-running the 81 MISSING + DLFAIL projects after the fix, **73 now run FROM
+scratch** (25 exit 0, 48 launch their closure and return non-zero/timeout on
+`--version` — not failures). **All 40 DLFAIL are resolved**; MISSING drops from
+41 to 8.
+
+Root cause: the closure completer mapped an unsatisfied soname to its provider
+project and pulled that project's **latest** bottle — but a soname carries an
+ABI version a newer release may have moved past (a binary needs
+`libxml2.so.2`, yet libxml2 2.15 ships `libxml2.so.16`; `libssl.so.1.1` is
+openssl 1.1.x while the latest is 3.x). The provider was often already present
+as a declared dep at the wrong version, so completion skipped it. The fix walks
+the provider's versions and installs the newest that ships the **exact** soname
+(prioritising versions whose leading number matches the soname's ABI tail, so
+`libssl.so.1.1` finds openssl 1.1.1w directly); the drifted and latest bottles
+coexist on `LD_LIBRARY_PATH`. Ten soname mappings were also added (libFLAC,
+libtheora, libgit2, libcbor, libavro, libprotoc, libclang, libtinfow,
+libgflags, and the libboost prefix).
+
+The **8 still-MISSING** are not closure-completion gaps pkgm can close:
+
+| project(s) | soname | why |
+| --- | --- | --- |
+| open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com | `libudev.so.1` | systemd/udev — **no pantry bottle provides it** |
+| clickhouse.com | `librt.so.1` | modern glibc merged `librt` into `libc`; no standalone `librt.so.1` is shipped |
+| ladspa.org | *(none)* | its `analyseplugin` treats `--version` as a plugin **name** to `dlopen` — a probe artifact, the tool itself runs |
+| tailwindcss.com | *(none)* | a Bun single-file binary that self-extracts a native `lightningcss` `.node` module to a virtual `$bunfs` at runtime — a Bun packaging quirk, not a pantry closure gap |
+
+So of the 85 original gaps, the fix closes ~73; the residue is 5 udev + 1
+librt (genuine pantry/glibc gaps), 1 Bun quirk, 1 probe artifact, and the 4
+SIGSEGV (a separate crash class, not addressed here).
+
 ### MISSING — unresolved shared library (41)
 
 The closure did not provide a `.so` the binary needs. Each is actionable: the
