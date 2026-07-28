@@ -932,20 +932,20 @@ the provider's versions and installs the newest that ships the <strong>exact</st
 coexist on <code>LD_LIBRARY_PATH</code>. Ten soname mappings were also added (libFLAC,
 libtheora, libgit2, libcbor, libavro, libprotoc, libclang, libtinfow,
 libgflags, and the libboost prefix).</p>
-<p>The <strong>8 still-MISSING</strong> are not closure-completion gaps pkgm can close:</p>
+<p>The <strong>8 still-MISSING</strong>:</p>
 <table>
 <thead>
 <tr>
 <th>project(s)</th>
 <th>soname</th>
-<th>why</th>
+<th>status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com</td>
 <td><code>libudev.so.1</code></td>
-<td>systemd/udev — <strong>no pantry bottle provides it</strong></td>
+<td><strong>being fixed.</strong> The only pantry provider was <code>systemd.io</code> (200+ binaries for one client library); a lightweight <code>github.com/eudev-project/eudev</code> recipe was added (<a href="https://github.com/pkgxdev/pantry/pull/13922">pkgxdev/pantry#13922</a>) — its <code>libudev.so.1</code> needs only glibc — and <code>libudev</code>→eudev is now mapped. Also needed <code>libcap.so.2</code> → mapped to the existing <code>kernel.org/libcap</code>. Resolves once the eudev bottle publishes.</td>
 </tr>
 <tr>
 <td>clickhouse.com</td>
@@ -964,9 +964,10 @@ libgflags, and the libboost prefix).</p>
 </tr>
 </tbody>
 </table>
-<p>So of the 85 original gaps, the fix closes ~73; the residue is 5 udev + 1
-librt (genuine pantry/glibc gaps), 1 Bun quirk, 1 probe artifact, and the 4
-SIGSEGV (a separate crash class, not addressed here).</p>
+<p>So of the 85 original gaps, the fix closes ~73 outright; the 5 <code>libudev</code>
+projects are addressed by the new eudev recipe + mapping (pending its bottle
+publishing); the true residue is 1 <code>librt</code> (glibc absorbed it), 1 Bun quirk, 1
+probe artifact, and the 4 SIGSEGV (a separate crash class, not addressed here).</p>
 <h3 id="missing-unresolved-shared-library-41">MISSING — unresolved shared library (41)<a class="headerlink" href="#missing-unresolved-shared-library-41" title="Permanent link">&para;</a></h3>
 <p>The closure did not provide a <code>.so</code> the binary needs. Each is actionable: the
 soname either needs a <code>soname → project</code> mapping in <code>closure.go</code>, or the pantry
