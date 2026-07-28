@@ -1,0 +1,727 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A dependency-free, pure-Go (CGO=0) package manager for pkgx bottles — runs on FROM scratch.">
+      
+      
+      
+        <link rel="canonical" href="https://go-pkgm.github.io/docs/0.1/from-scratch/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>FROM scratch - go-pkgm docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#running-pkgx-packages-on-from-scratch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="go-pkgm docs" class="md-header__button md-logo" aria-label="go-pkgm docs" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            go-pkgm docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FROM scratch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/go-pkgm/pkgm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-pkgm/pkgm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="go-pkgm docs" class="md-nav__button md-logo" aria-label="go-pkgm docs" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    go-pkgm docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/go-pkgm/pkgm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-pkgm/pkgm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    FROM scratch
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    FROM scratch
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-bottles-dont-just-run-on-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why bottles don't "just run" on scratch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-pkgm-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      What pkgm does
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conformance-status-linuxaarch64-image-only-the-pkgm-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conformance status (linux/aarch64, image = only the pkgm binary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pantry-wide-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pantry-wide audit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposal-to-the-pkgx-pantry-maintainers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposal to the pkgx / pantry maintainers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-bottles-dont-just-run-on-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why bottles don't "just run" on scratch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-pkgm-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      What pkgm does
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conformance-status-linuxaarch64-image-only-the-pkgm-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conformance status (linux/aarch64, image = only the pkgm binary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pantry-wide-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pantry-wide audit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposal-to-the-pkgx-pantry-maintainers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proposal to the pkgx / pantry maintainers
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="running-pkgx-packages-on-from-scratch">Running pkgx packages on <code>FROM scratch</code><a class="headerlink" href="#running-pkgx-packages-on-from-scratch" title="Permanent link">&para;</a></h1>
+<p>This document records what it takes to run pkgx bottles on a literally-empty
+base image (no libc, no shell, no coreutils), the conformance status of common
+packages, the fixes <code>pkgm</code> maintains to get there, and a proposal for the pkgx
+maintainers. It is a living document — extend it as new packages are tested.</p>
+<h2 id="why-bottles-dont-just-run-on-scratch">Why bottles don't "just run" on scratch<a class="headerlink" href="#why-bottles-dont-just-run-on-scratch" title="Permanent link">&para;</a></h2>
+<p>A pkgx bottle assumes a host system. Two structural gaps surface on scratch:</p>
+<ol>
+<li>
+<p><strong>The interpreter path.</strong> Every dynamic ELF has <code>PT_INTERP=/lib/ld-linux-*</code>
+   — an absolute system path that does not exist on a scratch image. <code>pkgm run</code>
+   symlinks the pkgx glibc loader to <code>/lib/ld-linux-*</code> (and <code>/bin/sh</code> to
+   itself) so parent and child ELFs resolve natively.</p>
+</li>
+<li>
+<p><strong>Incomplete runtime dependency graphs.</strong> A bottle's <code>package.yml</code>
+   <code>dependencies:</code> is <em>not</em> its full runtime closure. Examples measured:</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>package</th>
+<th>links (DT_NEEDED)</th>
+<th>declares in package.yml</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gnu.org/wget</code></td>
+<td>libz</td>
+<td>only <code>openssl.org</code></td>
+</tr>
+<tr>
+<td><code>curl.se</code></td>
+<td>libz, libzstd, libnghttp2</td>
+<td>(transitive only)</td>
+</tr>
+<tr>
+<td><code>perl.org</code></td>
+<td>libcrypt (libxcrypt)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>pkgx compensates with build-time-detected metadata that is <strong>not exposed</strong>
+   on <code>dist.pkgx.dev</code> (no <code>deps.json</code>; all such URLs 404). So <code>pkgm</code> rebuilds
+   the closure from the bottles' own <code>DT_NEEDED</code> — see below.</p>
+<h2 id="what-pkgm-does">What <code>pkgm</code> does<a class="headerlink" href="#what-pkgm-does" title="Permanent link">&para;</a></h2>
+<p><code>pkgm run</code> (and <code>pkgm install --from-scratch</code>) iterate to a fixpoint: scan the
+installed bottles' ELF <code>DT_NEEDED</code> (via Go's <code>debug/elf</code>) and, for every soname
+not yet provided by the closure, pull the bottle that provides it:</p>
+<ul>
+<li>glibc set (libc, libm, libpthread, libdl, librt, …) → <code>gnu.org/glibc</code></li>
+<li><code>libgcc_s</code>, <code>libstdc++</code> → <code>gnu.org/gcc/libstdcxx</code></li>
+<li><code>libatomic</code>, <code>libgomp</code> → <code>gnu.org/gcc</code></li>
+<li>common undeclared libraries → a curated <code>soname → project</code> table
+  (see <code>sonameProject</code> in <a href="../closure.go"><code>closure.go</code></a>): libz, libbz2,
+  liblzma, libzstd, liblz4, ncurses/libtinfo, readline, libffi, pcre2, gettext,
+  libiconv, libidn2, libunistring, libpsl, nghttp2, expat, libxml2, sqlite3,
+  gmp, mpfr, <strong>libcrypt → libxcrypt</strong>, …</li>
+</ul>
+<p>Wrapper scripts (<code>#!/bin/sh</code>, e.g. git) are run under the <strong>pkgx <code>gnu.org/bash</code>
++ <code>gnu.org/coreutils</code></strong>, which pkgm installs and points <code>/bin/sh</code> at — pkgm is
+a package manager, so it uses the real pkgx shell rather than reimplementing
+one. (An earlier attempt embedded a pure-Go shell, but its <code>set -e</code> semantics
+diverged from dash/bash and broke git's wrapper; real bash behaves correctly.)</p>
+<h2 id="conformance-status-linuxaarch64-image-only-the-pkgm-binary">Conformance status (linux/aarch64, image = only the pkgm binary)<a class="headerlink" href="#conformance-status-linuxaarch64-image-only-the-pkgm-binary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>package</th>
+<th>status</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gnu.org/bash</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>gnu.org/wget</td>
+<td>✅</td>
+<td>needs libz (undeclared)</td>
+</tr>
+<tr>
+<td>curl.se</td>
+<td>✅</td>
+<td>needs zstd + nghttp2 (undeclared)</td>
+</tr>
+<tr>
+<td>sqlite.org</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>gnu.org/grep</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>gnu.org/sed</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>gnu.org/gawk</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>lua.org</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>nodejs.org</td>
+<td>✅</td>
+<td>C++: libgcc_s + libstdc++</td>
+</tr>
+<tr>
+<td>python.org</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>perl.org</td>
+<td>✅</td>
+<td>needs libcrypt (undeclared)</td>
+</tr>
+<tr>
+<td>git-scm.org</td>
+<td>✅</td>
+<td><code>#!/bin/sh</code> wrapper → pkgm installs pkgx bash + coreutils</td>
+</tr>
+<tr>
+<td>gnu.org/tar, tukaani.org/xz, facebook.com/zstd, lz4.org</td>
+<td>✅</td>
+<td>compression</td>
+</tr>
+<tr>
+<td>rsync.samba.org, gnupg.org, vim.org, htop.dev</td>
+<td>✅</td>
+<td>incl. gnupg's crypto stack</td>
+</tr>
+</tbody>
+</table>
+<p>Across ~20 diverse packages tested, every correctly-named bottle runs on
+scratch with <strong>no missing-library failures</strong> — the <code>DT_NEEDED</code>-driven closure
+plus the <code>soname → project</code> table cover the implicit graph, and wrapper
+scripts run under the real pkgx bash.</p>
+<h2 id="pantry-wide-audit">Pantry-wide audit<a class="headerlink" href="#pantry-wide-audit" title="Permanent link">&para;</a></h2>
+<p>An audit of the whole pantry (linux/aarch64):</p>
+<ul>
+<li><strong>Availability</strong> — 1818 of 1896 projects (96%) publish a linux bottle, so
+  nearly the entire pantry is a FROM-scratch candidate.</li>
+<li><strong>Runtime sample</strong> — a diverse 100-project sample run under <code>pkgm run … --version</code>:
+  39 PASS, 38 no runnable bin / no <code>--version</code> (libraries; harness bias), 20
+  non-zero exit on <code>--version</code> (mostly tools without a <code>--version</code> flag), and
+  only <strong>2 missing-library failures</strong> — both <code>libabsl_*</code> (abseil), in <code>grpc.io</code>
+  (<code>grpc_csharp_plugin</code>) and <code>mosh.org</code>.</li>
+</ul>
+<p>Those two are <strong>not</strong> closure gaps pkgm can fill: the bottles were built against
+an abseil whose soname (<code>…so.2501</code>, <code>…so.2401</code>) no <em>declared/available</em> abseil
+version provides — <code>grpc.io</code> pins <code>abseil.io: ^20250512</code> (soname <code>2505</code>). This
+is a pantry bottle-vs-declared-dependency drift; pkgx itself would fail there
+too. No consumer tool can supply a soname no bottle ships.</p>
+<p>Net: the <code>DT_NEEDED</code>-driven closure resolves the implicit graph across the
+pantry, with the only observed failures being upstream version-pin drift. The
+<code>soname → project</code> table also gained prefix matching (<code>projectForSoname</code>) for
+multi-<code>.so</code> projects such as abseil (<code>libabsl_*</code>), protobuf and re2.</p>
+<h2 id="proposal-to-the-pkgx-pantry-maintainers">Proposal to the pkgx / pantry maintainers<a class="headerlink" href="#proposal-to-the-pkgx-pantry-maintainers" title="Permanent link">&para;</a></h2>
+<p>The information needed to run a bottle standalone (its complete runtime closure)
+exists at build time but is not published. Two complementary asks:</p>
+<ol>
+<li>
+<p><strong>Publish the resolved runtime closure per bottle</strong> — e.g. a <code>deps.json</code>
+   next to <code>versions.txt</code> on <code>dist.pkgx.dev</code>, listing the transitive
+   project@version set actually linked (including the implicit libc/gcc/libz/…
+   that <code>package.yml</code> omits). This lets any tool assemble a complete,
+   relocatable environment without re-deriving it from <code>DT_NEEDED</code>.</p>
+</li>
+<li>
+<p><strong>Optionally, an explicit <code>platforms</code>/<code>runtime</code> declaration</strong> for the
+   implicit system libraries a bottle links, so <code>FROM scratch</code> consumers are
+   first-class.</p>
+</li>
+</ol>
+<p><code>go-pkgm/pkgm</code> is a working proof of concept: a single pure-Go, <code>CGO_ENABLED=0</code>
+binary that resolves the closure from <code>DT_NEEDED</code> and runs real packages
+(bash, curl, node, python, perl, …) on a <code>FROM scratch</code> image with zero system
+dependencies. See <a href="https://github.com/go-pkgm/pkgm">https://github.com/go-pkgm/pkgm</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "navigation.instant", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>
