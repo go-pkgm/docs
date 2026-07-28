@@ -164,18 +164,19 @@ coexist on `LD_LIBRARY_PATH`. Ten soname mappings were also added (libFLAC,
 libtheora, libgit2, libcbor, libavro, libprotoc, libclang, libtinfow,
 libgflags, and the libboost prefix).
 
-The **8 still-MISSING** are not closure-completion gaps pkgm can close:
+The **8 still-MISSING**:
 
-| project(s) | soname | why |
+| project(s) | soname | status |
 | --- | --- | --- |
-| open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com | `libudev.so.1` | systemd/udev — **no pantry bottle provides it** |
+| open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com | `libudev.so.1` | **being fixed.** The only pantry provider was `systemd.io` (200+ binaries for one client library); a lightweight `github.com/eudev-project/eudev` recipe was added ([pkgxdev/pantry#13922](https://github.com/pkgxdev/pantry/pull/13922)) — its `libudev.so.1` needs only glibc — and `libudev`→eudev is now mapped. Also needed `libcap.so.2` → mapped to the existing `kernel.org/libcap`. Resolves once the eudev bottle publishes. |
 | clickhouse.com | `librt.so.1` | modern glibc merged `librt` into `libc`; no standalone `librt.so.1` is shipped |
 | ladspa.org | *(none)* | its `analyseplugin` treats `--version` as a plugin **name** to `dlopen` — a probe artifact, the tool itself runs |
 | tailwindcss.com | *(none)* | a Bun single-file binary that self-extracts a native `lightningcss` `.node` module to a virtual `$bunfs` at runtime — a Bun packaging quirk, not a pantry closure gap |
 
-So of the 85 original gaps, the fix closes ~73; the residue is 5 udev + 1
-librt (genuine pantry/glibc gaps), 1 Bun quirk, 1 probe artifact, and the 4
-SIGSEGV (a separate crash class, not addressed here).
+So of the 85 original gaps, the fix closes ~73 outright; the 5 `libudev`
+projects are addressed by the new eudev recipe + mapping (pending its bottle
+publishing); the true residue is 1 `librt` (glibc absorbed it), 1 Bun quirk, 1
+probe artifact, and the 4 SIGSEGV (a separate crash class, not addressed here).
 
 ### MISSING — unresolved shared library (41)
 
