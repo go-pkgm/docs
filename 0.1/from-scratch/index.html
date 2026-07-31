@@ -945,7 +945,7 @@ libgflags, and the libboost prefix).</p>
 <tr>
 <td>open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com</td>
 <td><code>libudev.so.1</code></td>
-<td><strong>being fixed.</strong> The only pantry provider was <code>systemd.io</code> (200+ binaries for one client library); a lightweight <code>github.com/eudev-project/eudev</code> recipe was added (<a href="https://github.com/pkgxdev/pantry/pull/13922">pkgxdev/pantry#13922</a>) — its <code>libudev.so.1</code> needs only glibc — and <code>libudev</code>→eudev is now mapped. Also needed <code>libcap.so.2</code> → mapped to the existing <code>kernel.org/libcap</code>. Resolves once the eudev bottle publishes.</td>
+<td><strong>FIXED ✅.</strong> The only pantry provider was <code>systemd.io</code> (200+ binaries for one client library); a lightweight <code>github.com/eudev-project/eudev</code> recipe was added (<a href="https://github.com/pkgxdev/pantry/pull/13922">pkgxdev/pantry#13922</a>, <strong>merged</strong>) — its <code>libudev.so.1</code> needs only glibc — and <code>libudev</code>→eudev + <code>libcap.so.2</code>→<code>kernel.org/libcap</code> are mapped. <strong>Verified FROM scratch</strong>: all 5 now run (fnox/hwloc/openpmix/solana exit 0; open-mpi launches its closure).</td>
 </tr>
 <tr>
 <td>clickhouse.com</td>
