@@ -1,4 +1,4 @@
-# go-pkgm
+# go-pkgx
 
 A **dependency-free, pure-Go** (`CGO_ENABLED=0`) package manager for
 [pkgx](https://pkgx.sh) bottles — a single static binary that installs **and
@@ -7,7 +7,7 @@ own.
 
 The reference `pkgm` is a Deno/TypeScript script that shells out to `pkgx`,
 `deno`, `curl`, `openssl`, `zlib` and `xz` — roughly **515 MB** of runtime
-closure just to install a package. go-pkgm replaces all of it with one static
+closure just to install a package. go-pkgx replaces all of it with one static
 ~9 MB binary.
 
 ## Install
