@@ -13,7 +13,7 @@ closure just to install a package. go-pkgm replaces all of it with one static
 ## Install
 
 ```sh
-go install github.com/go-pkgm/pkgm@latest
+go install github.com/go-pkgx/pkgm@latest
 ```
 
 ## Usage

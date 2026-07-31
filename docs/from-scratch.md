@@ -105,7 +105,7 @@ bottle-backed projects. This section records the full run.
 | field | value |
 | --- | --- |
 | pantry ref | `ef7e60a3a2e6e07f7efeaf1e7c765fa670e66584` (2026-07-28T15:42:19Z) |
-| go-pkgm/pkgm commit | `77741ed` (2026-07-28) |
+| go-pkgx/pkgm commit | `77741ed` (2026-07-28) |
 | sweep date | 2026-07-28 |
 | projects (N) | 1818 (every project with a linux bottle) |
 | method | `docker run --rm pkgm-scratch run <project> -- --version` on a `FROM scratch` image containing only the pkgm binary |
@@ -349,7 +349,7 @@ exists at build time but is not published. Two complementary asks:
    implicit system libraries a bottle links, so `FROM scratch` consumers are
    first-class.
 
-`go-pkgm/pkgm` is a working proof of concept: a single pure-Go, `CGO_ENABLED=0`
+`go-pkgx/pkgm` is a working proof of concept: a single pure-Go, `CGO_ENABLED=0`
 binary that resolves the closure from `DT_NEEDED` and runs real packages
 (bash, curl, node, python, perl, …) on a `FROM scratch` image with zero system
-dependencies. See <https://github.com/go-pkgm/pkgm>.
+dependencies. See <https://github.com/go-pkgx/pkgm>.

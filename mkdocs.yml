@@ -1,8 +1,8 @@
 site_name: go-pkgm docs
 site_description: "A dependency-free, pure-Go (CGO=0) package manager for pkgx bottles — runs on FROM scratch."
-site_url: https://go-pkgm.github.io/docs/
-repo_url: https://github.com/go-pkgm/pkgm
-repo_name: go-pkgm/pkgm
+site_url: https://go-pkgx.github.io/docs/
+repo_url: https://github.com/go-pkgx/pkgm
+repo_name: go-pkgx/pkgm
 edit_uri: ""
 
 theme:
