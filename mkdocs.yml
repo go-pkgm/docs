@@ -41,6 +41,7 @@ extra:
 nav:
   - Home: index.md
   - FROM scratch: from-scratch.md
+  - Windows: windows.md
 
 
 markdown_extensions:
