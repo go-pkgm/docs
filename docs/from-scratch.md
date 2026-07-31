@@ -168,7 +168,7 @@ The **8 still-MISSING**:
 
 | project(s) | soname | status |
 | --- | --- | --- |
-| open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com | `libudev.so.1` | **being fixed.** The only pantry provider was `systemd.io` (200+ binaries for one client library); a lightweight `github.com/eudev-project/eudev` recipe was added ([pkgxdev/pantry#13922](https://github.com/pkgxdev/pantry/pull/13922)) — its `libudev.so.1` needs only glibc — and `libudev`→eudev is now mapped. Also needed `libcap.so.2` → mapped to the existing `kernel.org/libcap`. Resolves once the eudev bottle publishes. |
+| open-mpi.org, open-mpi.org/hwloc, openpmix.github.io, fnox.jdx.dev, solana.com | `libudev.so.1` | **FIXED ✅.** The only pantry provider was `systemd.io` (200+ binaries for one client library); a lightweight `github.com/eudev-project/eudev` recipe was added ([pkgxdev/pantry#13922](https://github.com/pkgxdev/pantry/pull/13922), **merged**) — its `libudev.so.1` needs only glibc — and `libudev`→eudev + `libcap.so.2`→`kernel.org/libcap` are mapped. **Verified FROM scratch**: all 5 now run (fnox/hwloc/openpmix/solana exit 0; open-mpi launches its closure). |
 | clickhouse.com | `librt.so.1` | modern glibc merged `librt` into `libc`; no standalone `librt.so.1` is shipped |
 | ladspa.org | *(none)* | its `analyseplugin` treats `--version` as a plugin **name** to `dlopen` — a probe artifact, the tool itself runs |
 | tailwindcss.com | *(none)* | a Bun single-file binary that self-extracts a native `lightningcss` `.node` module to a virtual `$bunfs` at runtime — a Bun packaging quirk, not a pantry closure gap |
