@@ -37,7 +37,7 @@ not yet provided by the closure, pull the bottle that provides it:
 - `libgcc_s`, `libstdc++` → `gnu.org/gcc/libstdcxx`
 - `libatomic`, `libgomp` → `gnu.org/gcc`
 - common undeclared libraries → a curated `soname → project` table
-  (see `sonameProject` in [`closure.go`](../closure.go)): libz, libbz2,
+  (see `sonameProject` in [`closure.go`](https://github.com/go-pkgx/bottle/blob/main/closure.go)): libz, libbz2,
   liblzma, libzstd, liblz4, ncurses/libtinfo, readline, libffi, pcre2, gettext,
   libiconv, libidn2, libunistring, libpsl, nghttp2, expat, libxml2, sqlite3,
   gmp, mpfr, **libcrypt → libxcrypt**, …
