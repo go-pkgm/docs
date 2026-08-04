@@ -12,9 +12,32 @@ closure just to install a package. go-pkgx replaces all of it with one static
 
 ## Install
 
+**Linux / macOS** — one line:
+
+```sh
+curl -fsSL https://go-pkgx.github.io/install.sh | sh
+```
+
+**Windows** — one line (PowerShell):
+
+```powershell
+irm https://go-pkgx.github.io/install.ps1 | iex
+```
+
+The installer downloads the static binary for your os/arch from the latest
+[release](https://github.com/go-pkgx/pkgm/releases/latest), verifies it against
+the release `SHA256SUMS`, and puts `pkgm` on your `PATH` (`$HOME/.local/bin`, or
+`%LOCALAPPDATA%\Programs\go-pkgx` on Windows; set `PKGM_INSTALL` to override on
+Unix).
+
+**Go users**:
+
 ```sh
 go install github.com/go-pkgx/pkgm@latest
 ```
+
+Once installed, `pkgm install lz4.org` verifies each bottle against the signed
+registry by default.
 
 ## Usage
 
