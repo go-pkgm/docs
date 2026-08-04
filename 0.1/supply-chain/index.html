@@ -505,10 +505,10 @@ needed to audit and trust it. Three artifacts are attached to each package as <s
 referrers</strong>, so they travel with the image and are discoverable from its digest:</p>
 <ul>
 <li>a <strong>CycloneDX SBOM</strong> — the package's components and versions
-  (<a href="https://github.com/go-pkgx/sbom"><code>go-pkgx/sbom</code></a>);</li>
+  (<a href="https://github.com/go-attest/sbom"><code>go-attest/sbom</code></a>);</li>
 <li>an in-toto <strong>SLSA provenance</strong> statement — how and from what the package was built;</li>
 <li>a <strong>cosign-style + minisign signature</strong> over the package
-  (<a href="https://github.com/go-pkgx/sign"><code>go-pkgx/sign</code></a>).</li>
+  (<a href="https://github.com/go-attest/sign"><code>go-attest/sign</code></a>).</li>
 </ul>
 <h2 id="the-pinned-key">The pinned key<a class="headerlink" href="#the-pinned-key" title="Permanent link">&para;</a></h2>
 <p>Signatures verify against a single pinned public key:</p>

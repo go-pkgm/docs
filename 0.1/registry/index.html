@@ -355,6 +355,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#two-channels-every-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two channels, every platform
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-factory" class="md-nav__link">
     <span class="md-ellipsis">
       The factory
@@ -476,6 +485,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#two-channels-every-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two channels, every platform
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-factory" class="md-nav__link">
     <span class="md-ellipsis">
       The factory
@@ -520,15 +538,29 @@
 <h1 id="package-registry">Package registry<a class="headerlink" href="#package-registry" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/go-pkgx/packages"><code>ghcr.io/go-pkgx/packages</code></a> is a pure-Go
 package factory: it builds <a href="https://github.com/pkgxdev/pantry">pkgx pantry</a>
-recipes and publishes <strong>signed, attested packages</strong> as OCI artifacts.</p>
+recipes and publishes <strong>signed, attested packages</strong> for <strong>every platform</strong> through
+<strong>two channels</strong>.</p>
+<h2 id="two-channels-every-platform">Two channels, every platform<a class="headerlink" href="#two-channels-every-platform" title="Permanent link">&para;</a></h2>
+<p>Every platform — <strong>linux/x86-64</strong>, <strong>linux/aarch64</strong>, <strong>darwin/aarch64</strong>,
+<strong>darwin/x86-64</strong> and <strong>windows/x86-64</strong> — publishes to <strong>both</strong>:</p>
+<ul>
+<li>the <strong>signed OCI registry</strong> <code>ghcr.io/go-pkgx/packages</code> (each package carrying an
+  SBOM, provenance and signature as OCI referrers), and</li>
+<li>a <strong>GitHub Pages pkgx-dist mirror</strong> at
+  <a href="https://go-pkgx.github.io/packages"><code>https://go-pkgx.github.io/packages</code></a>,
+  carrying all platforms side by side (<code>&lt;project&gt;/&lt;os&gt;/&lt;arch&gt;/…</code>).</li>
+</ul>
 <h2 id="the-factory">The factory<a class="headerlink" href="#the-factory" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://github.com/go-pkgx/packages"><code>go-pkgx/packages</code></a> repo is the factory.
-A GitHub Actions workflow builds each recipe with
+GitHub Actions workflows build each recipe with
 <a href="https://github.com/go-pkgx/bk"><code>bk</code></a> — the CGO-free re-implementation of brewkit
-— and pushes the result to ghcr.</p>
+— and publish the result to both channels.</p>
 <ul>
-<li><strong>Matrix:</strong> <code>linux/x86-64</code> + <code>linux/aarch64</code>.</li>
-<li><strong>Schedule:</strong> daily, <code>cron: "0 6 * * *"</code> (plus manual <code>workflow_dispatch</code>).</li>
+<li><strong>Factories:</strong> <code>build.yml</code> (linux), <code>darwin.yml</code> (macOS), <code>windows.yml</code> (Go) +
+  <code>windows-rust.yml</code> (Rust) + <code>windows-proof.yml</code> (e2e), each publishing to the OCI
+  registry and uploading a pkgx dist tree; a single <code>pages.yml</code> aggregator unions
+  the latest run of every build into the combined Pages mirror.</li>
+<li><strong>Schedule:</strong> each factory runs on a schedule (plus manual <code>workflow_dispatch</code>).</li>
 <li><strong>Auth:</strong> the workflow's <strong>native <code>GITHUB_TOKEN</code></strong> (<code>permissions.packages: write</code>)
   — no long-lived PAT to manage or rotate.</li>
 <li><strong>Ordering:</strong> requested projects are expanded to their <strong>topologically-ordered
@@ -540,9 +572,10 @@ A GitHub Actions workflow builds each recipe with
 dependency-free leaves toward the full pantry.</p>
 <h2 id="what-is-published">What is published<a class="headerlink" href="#what-is-published" title="Permanent link">&para;</a></h2>
 <p>Packages are ordinary OCI artifacts — each with a signature, an SBOM, and a
-provenance statement attached as <a href="../supply-chain/">referrers</a>. Because the daily
-cron keeps adding recipes, treat the published set as a moving target. Live at the
-time of writing:</p>
+provenance statement attached as <a href="../supply-chain/">referrers</a>. Because the
+factories keep adding recipes, treat the published set as a moving target — it
+grows continuously. Example packages published at the time of writing (a snapshot,
+not the full catalog):</p>
 <table>
 <thead>
 <tr>
@@ -579,8 +612,11 @@ time of writing:</p>
 </code></pre></div>
 <p><code>PKGX_VERIFY=1</code> is fail-closed: an unsigned or badly-signed package is refused, not
 installed. See <a href="../supply-chain/">supply chain</a> for the verification model.</p>
+<p>Or consume the same packages from the GitHub Pages pkgx-dist mirror:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">PKGX_DIST</span><span class="o">=</span>https://go-pkgx.github.io/packages<span class="w"> </span>pkgm<span class="w"> </span>install<span class="w"> </span>lz4.org
+</code></pre></div>
 <p>Packages are OCI artifacts, so any OCI client can also pull them directly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/go-pkgx/packages/lz4.org:1.10.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/go-pkgx/packages/lz4.org:1.10.0
 </code></pre></div>
 
 
