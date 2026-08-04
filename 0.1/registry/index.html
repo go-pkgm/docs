@@ -10,22 +10,28 @@
       
       
       
+        <link rel="canonical" href="https://go-pkgx.github.io/docs/0.1/registry/">
       
       
+        <link rel="prev" href="../from-scratch/">
       
-      <link rel="icon" href="/docs/0.1/assets/logo.svg">
+      
+        <link rel="next" href="../supply-chain/">
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>go-pkgx docs</title>
+        <title>Package registry - go-pkgx docs</title>
       
     
     
-      <link rel="stylesheet" href="/docs/0.1/assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="/docs/0.1/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("/docs/0.1",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#package-registry" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,9 +96,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/docs/0.1/." title="go-pkgx docs" class="md-header__button md-logo" aria-label="go-pkgx docs" data-md-component="logo">
+    <a href=".." title="go-pkgx docs" class="md-header__button md-logo" aria-label="go-pkgx docs" data-md-component="logo">
       
-  <img src="/docs/0.1/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Package registry
             
           </span>
         </div>
@@ -229,9 +240,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/docs/0.1/." title="go-pkgx docs" class="md-nav__button md-logo" aria-label="go-pkgx docs" data-md-component="logo">
+    <a href=".." title="go-pkgx docs" class="md-nav__button md-logo" aria-label="go-pkgx docs" data-md-component="logo">
       
-  <img src="/docs/0.1/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     go-pkgx docs
@@ -258,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -278,7 +289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/from-scratch/" class="md-nav__link">
+      <a href="../from-scratch/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -295,10 +306,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/docs/0.1/registry/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Package registry
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -307,6 +338,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The factory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-published" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is published
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consuming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consuming
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -318,7 +396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/supply-chain/" class="md-nav__link">
+      <a href="../supply-chain/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -338,7 +416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/build-isolation/" class="md-nav__link">
+      <a href="../build-isolation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -358,7 +436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/windows/" class="md-nav__link">
+      <a href="../windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -388,6 +466,43 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The factory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-published" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is published
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consuming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consuming
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -399,8 +514,87 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+<h1 id="package-registry">Package registry<a class="headerlink" href="#package-registry" title="Permanent link">&para;</a></h1>
+<p><a href="https://github.com/go-pkgx/packages"><code>ghcr.io/go-pkgx/packages</code></a> is a pure-Go
+package factory: it builds <a href="https://github.com/pkgxdev/pantry">pkgx pantry</a>
+recipes and publishes <strong>signed, attested bottles</strong> as OCI artifacts.</p>
+<h2 id="the-factory">The factory<a class="headerlink" href="#the-factory" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/go-pkgx/packages"><code>go-pkgx/packages</code></a> repo is the factory.
+A GitHub Actions workflow builds each recipe with
+<a href="https://github.com/go-pkgx/bk"><code>bk</code></a> — the CGO-free re-implementation of brewkit
+— and pushes the result to ghcr.</p>
+<ul>
+<li><strong>Matrix:</strong> <code>linux/x86-64</code> + <code>linux/aarch64</code>.</li>
+<li><strong>Schedule:</strong> daily, <code>cron: "0 6 * * *"</code> (plus manual <code>workflow_dispatch</code>).</li>
+<li><strong>Auth:</strong> the workflow's <strong>native <code>GITHUB_TOKEN</code></strong> (<code>permissions.packages: write</code>)
+  — no long-lived PAT to manage or rotate.</li>
+<li><strong>Ordering:</strong> requested projects are expanded to their <strong>topologically-ordered
+  runtime-dependency closure</strong>, so every dependency is built before its dependents.</li>
+<li><strong>Idempotent:</strong> any <code>(project, version, platform)</code> already in ghcr is <strong>skipped</strong>,
+  so shared dependencies build once and the catalog grows progressively.</li>
+</ul>
+<p>Per-recipe failures are logged, never fatal; the recipe list is grown outward from
+dependency-free leaves toward the full pantry.</p>
+<h2 id="what-is-published">What is published<a class="headerlink" href="#what-is-published" title="Permanent link">&para;</a></h2>
+<p>Bottles are ordinary OCI artifacts — each with a signature, an SBOM, and a
+provenance statement attached as <a href="../supply-chain/">referrers</a>. Because the daily
+cron keeps adding recipes, treat the published set as a moving target. Live at the
+time of writing:</p>
+<table>
+<thead>
+<tr>
+<th>project</th>
+<th>version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zlib.net</code></td>
+<td>1.3.2</td>
+</tr>
+<tr>
+<td><code>tukaani.org/xz</code></td>
+<td>5.8.3</td>
+</tr>
+<tr>
+<td><code>lz4.org</code></td>
+<td>1.10.0</td>
+</tr>
+<tr>
+<td><code>gnu.org/tar</code></td>
+<td>1.35</td>
+</tr>
+<tr>
+<td><code>sourceware.org/bzip2</code></td>
+<td>1.0.8</td>
+</tr>
+</tbody>
+</table>
+<h2 id="consuming">Consuming<a class="headerlink" href="#consuming" title="Permanent link">&para;</a></h2>
+<p>Point the go-pkgx tools at the registry and verify against the pinned key:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">PKGX_DIST</span><span class="o">=</span>oci://ghcr.io/go-pkgx/packages<span class="w"> </span><span class="nv">PKGX_VERIFY</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pkgm<span class="w"> </span>install<span class="w"> </span>lz4.org
+</code></pre></div>
+<p><code>PKGX_VERIFY=1</code> is fail-closed: an unsigned or badly-signed bottle is refused, not
+installed. See <a href="../supply-chain/">supply chain</a> for the verification model.</p>
+<p>Bottles are OCI artifacts, so any OCI client can also pull them directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/go-pkgx/packages/lz4.org:1.10.0
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -440,10 +634,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/docs/0.1", "features": ["navigation.sections", "navigation.top", "navigation.instant", "content.code.copy", "search.suggest"], "search": "/docs/0.1/assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "navigation.instant", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="/docs/0.1/assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>
