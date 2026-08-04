@@ -520,7 +520,7 @@
 <h1 id="package-registry">Package registry<a class="headerlink" href="#package-registry" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/go-pkgx/packages"><code>ghcr.io/go-pkgx/packages</code></a> is a pure-Go
 package factory: it builds <a href="https://github.com/pkgxdev/pantry">pkgx pantry</a>
-recipes and publishes <strong>signed, attested bottles</strong> as OCI artifacts.</p>
+recipes and publishes <strong>signed, attested packages</strong> as OCI artifacts.</p>
 <h2 id="the-factory">The factory<a class="headerlink" href="#the-factory" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://github.com/go-pkgx/packages"><code>go-pkgx/packages</code></a> repo is the factory.
 A GitHub Actions workflow builds each recipe with
@@ -539,7 +539,7 @@ A GitHub Actions workflow builds each recipe with
 <p>Per-recipe failures are logged, never fatal; the recipe list is grown outward from
 dependency-free leaves toward the full pantry.</p>
 <h2 id="what-is-published">What is published<a class="headerlink" href="#what-is-published" title="Permanent link">&para;</a></h2>
-<p>Bottles are ordinary OCI artifacts — each with a signature, an SBOM, and a
+<p>Packages are ordinary OCI artifacts — each with a signature, an SBOM, and a
 provenance statement attached as <a href="../supply-chain/">referrers</a>. Because the daily
 cron keeps adding recipes, treat the published set as a moving target. Live at the
 time of writing:</p>
@@ -577,9 +577,9 @@ time of writing:</p>
 <p>Point the go-pkgx tools at the registry and verify against the pinned key:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">PKGX_DIST</span><span class="o">=</span>oci://ghcr.io/go-pkgx/packages<span class="w"> </span><span class="nv">PKGX_VERIFY</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pkgm<span class="w"> </span>install<span class="w"> </span>lz4.org
 </code></pre></div>
-<p><code>PKGX_VERIFY=1</code> is fail-closed: an unsigned or badly-signed bottle is refused, not
+<p><code>PKGX_VERIFY=1</code> is fail-closed: an unsigned or badly-signed package is refused, not
 installed. See <a href="../supply-chain/">supply chain</a> for the verification model.</p>
-<p>Bottles are OCI artifacts, so any OCI client can also pull them directly:</p>
+<p>Packages are OCI artifacts, so any OCI client can also pull them directly:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/go-pkgx/packages/lz4.org:1.10.0
 </code></pre></div>
 

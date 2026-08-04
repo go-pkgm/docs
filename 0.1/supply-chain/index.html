@@ -500,14 +500,14 @@
 
 
 <h1 id="supply-chain">Supply chain<a class="headerlink" href="#supply-chain" title="Permanent link">&para;</a></h1>
-<p>Every bottle in <a href="../registry/"><code>ghcr.io/go-pkgx/packages</code></a> ships with the evidence
-needed to audit and trust it. Three artifacts are attached to each bottle as <strong>OCI
+<p>Every package in <a href="../registry/"><code>ghcr.io/go-pkgx/packages</code></a> ships with the evidence
+needed to audit and trust it. Three artifacts are attached to each package as <strong>OCI
 referrers</strong>, so they travel with the image and are discoverable from its digest:</p>
 <ul>
-<li>a <strong>CycloneDX SBOM</strong> — the bottle's components and versions
+<li>a <strong>CycloneDX SBOM</strong> — the package's components and versions
   (<a href="https://github.com/go-pkgx/sbom"><code>go-pkgx/sbom</code></a>);</li>
-<li>an in-toto <strong>SLSA provenance</strong> statement — how and from what the bottle was built;</li>
-<li>a <strong>cosign-style + minisign signature</strong> over the bottle
+<li>an in-toto <strong>SLSA provenance</strong> statement — how and from what the package was built;</li>
+<li>a <strong>cosign-style + minisign signature</strong> over the package
   (<a href="https://github.com/go-pkgx/sign"><code>go-pkgx/sign</code></a>).</li>
 </ul>
 <h2 id="the-pinned-key">The pinned key<a class="headerlink" href="#the-pinned-key" title="Permanent link">&para;</a></h2>
@@ -520,8 +520,8 @@ consumer checks against this exact public key.</p>
 <p>The <a href="https://github.com/go-pkgx/bottle"><code>go-pkgx/bottle</code></a> backend that both <code>pkgx</code>
 and <code>pkgm</code> import performs verification at install time:</p>
 <ul>
-<li><code>bottle.VerifySignature</code> validates a bottle's signature against the pinned key.</li>
-<li>Setting <strong><code>PKGX_VERIFY=1</code></strong> makes verification <strong>fail-closed</strong>: a bottle with no
+<li><code>bottle.VerifySignature</code> validates a package's signature against the pinned key.</li>
+<li>Setting <strong><code>PKGX_VERIFY=1</code></strong> makes verification <strong>fail-closed</strong>: a package with no
   signature, or one that does not verify, is <strong>refused</strong> rather than installed.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># refuses to install anything that isn&#39;t validly signed by the pinned key</span>

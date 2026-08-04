@@ -517,7 +517,7 @@
 
 <h1 id="go-pkgx">go-pkgx<a class="headerlink" href="#go-pkgx" title="Permanent link">&para;</a></h1>
 <p>A <strong>dependency-free, pure-Go</strong> (<code>CGO_ENABLED=0</code>) package manager for
-<a href="https://pkgx.sh">pkgx</a> bottles — a single static binary that installs <strong>and
+<a href="https://pkgx.sh">pkgx</a> packages — a single static binary that installs <strong>and
 runs</strong> packages on a <code>FROM scratch</code> image, with no runtime dependencies of its
 own.</p>
 <p>The reference <code>pkgm</code> is a Deno/TypeScript script that shells out to <code>pkgx</code>,
@@ -538,7 +538,7 @@ closure just to install a package. go-pkgx replaces all of it with one static
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>pkgm run|x        &lt;pkg&gt; [-- args...]    run a pkg (works FROM scratch)
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>flags: -h/--help  -v/--version  -p/--pin  -P/--prefix DIR  -s/--from-scratch
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>env:   PKGX_DIR   bottle store (default: ~/.pkgx)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>env:   PKGX_DIR   package store (default: ~/.pkgx)
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>       PKGM_PREFIX default install prefix (ideal for FROM scratch)
 </code></pre></div>
 <p>The <code>install</code>/<code>uninstall</code>/<code>shim</code>/<code>list</code>/<code>outdated</code>/<code>update</code>/<code>pin</code> command

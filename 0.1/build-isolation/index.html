@@ -500,7 +500,7 @@
 
 
 <h1 id="build-isolation">Build isolation<a class="headerlink" href="#build-isolation" title="Permanent link">&para;</a></h1>
-<p>Bottles are only as trustworthy as the environment that produced them. The factory
+<p>Packages are only as trustworthy as the environment that produced them. The factory
 builds in two phases, one shipped and one experimental.</p>
 <h2 id="phase-a-debian-container-shipped">Phase A — debian container (shipped)<a class="headerlink" href="#phase-a-debian-container-shipped" title="Permanent link">&para;</a></h2>
 <p>Builds run inside a pinned <code>debian:stable-slim</code> container rather than on the drifting
@@ -511,10 +511,10 @@ GitHub-runner host. This gives:</p>
   dependencies are present;</li>
 <li>reproducible output across runs.</li>
 </ul>
-<p>This is the isolation model in use for every published bottle today.</p>
+<p>This is the isolation model in use for every published package today.</p>
 <h2 id="phase-b-from-scratch-pkgx-glibc-toolchain-experimental">Phase B — FROM-scratch pkgx-glibc toolchain (experimental)<a class="headerlink" href="#phase-b-from-scratch-pkgx-glibc-toolchain-experimental" title="Permanent link">&para;</a></h2>
 <p>Phase A still links against the container's glibc. Phase B goes further: build against
-pkgx's <strong>own</strong> glibc toolchain so bottles are truly self-contained and run on a
+pkgx's <strong>own</strong> glibc toolchain so packages are truly self-contained and run on a
 literally-empty <code>FROM scratch</code> base with no system libc at all.</p>
 <p>This is a <a href="https://github.com/go-pkgx/bk"><code>bk</code></a> change, currently <strong>experimental /
 proven feasible</strong> — not yet the default:</p>
@@ -525,7 +525,7 @@ proven feasible</strong> — not yet the default:</p>
   <a href="https://github.com/go-pkgx/bk/blob/feat/pkgx-glibc-toolchain/docs/from-scratch-toolchain.md"><code>bk/docs/from-scratch-toolchain.md</code></a>.</li>
 </ul>
 <p>See <a href="../from-scratch/">Running pkgx packages on FROM scratch</a> for why a system-linked
-bottle needs closure completion to run on scratch, and what Phase B removes.</p>
+package needs closure completion to run on scratch, and what Phase B removes.</p>
 
 
 
