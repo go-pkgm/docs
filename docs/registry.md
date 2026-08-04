@@ -2,17 +2,32 @@
 
 [`ghcr.io/go-pkgx/packages`](https://github.com/go-pkgx/packages) is a pure-Go
 package factory: it builds [pkgx pantry](https://github.com/pkgxdev/pantry)
-recipes and publishes **signed, attested packages** as OCI artifacts.
+recipes and publishes **signed, attested packages** for **every platform** through
+**two channels**.
+
+## Two channels, every platform
+
+Every platform — **linux/x86-64**, **linux/aarch64**, **darwin/aarch64**,
+**darwin/x86-64** and **windows/x86-64** — publishes to **both**:
+
+- the **signed OCI registry** `ghcr.io/go-pkgx/packages` (each package carrying an
+  SBOM, provenance and signature as OCI referrers), and
+- a **GitHub Pages pkgx-dist mirror** at
+  [`https://go-pkgx.github.io/packages`](https://go-pkgx.github.io/packages),
+  carrying all platforms side by side (`<project>/<os>/<arch>/…`).
 
 ## The factory
 
 The [`go-pkgx/packages`](https://github.com/go-pkgx/packages) repo is the factory.
-A GitHub Actions workflow builds each recipe with
+GitHub Actions workflows build each recipe with
 [`bk`](https://github.com/go-pkgx/bk) — the CGO-free re-implementation of brewkit
-— and pushes the result to ghcr.
+— and publish the result to both channels.
 
-- **Matrix:** `linux/x86-64` + `linux/aarch64`.
-- **Schedule:** daily, `cron: "0 6 * * *"` (plus manual `workflow_dispatch`).
+- **Factories:** `build.yml` (linux), `darwin.yml` (macOS), `windows.yml` (Go) +
+  `windows-rust.yml` (Rust) + `windows-proof.yml` (e2e), each publishing to the OCI
+  registry and uploading a pkgx dist tree; a single `pages.yml` aggregator unions
+  the latest run of every build into the combined Pages mirror.
+- **Schedule:** each factory runs on a schedule (plus manual `workflow_dispatch`).
 - **Auth:** the workflow's **native `GITHUB_TOKEN`** (`permissions.packages: write`)
   — no long-lived PAT to manage or rotate.
 - **Ordering:** requested projects are expanded to their **topologically-ordered
@@ -26,9 +41,10 @@ dependency-free leaves toward the full pantry.
 ## What is published
 
 Packages are ordinary OCI artifacts — each with a signature, an SBOM, and a
-provenance statement attached as [referrers](supply-chain.md). Because the daily
-cron keeps adding recipes, treat the published set as a moving target. Live at the
-time of writing:
+provenance statement attached as [referrers](supply-chain.md). Because the
+factories keep adding recipes, treat the published set as a moving target — it
+grows continuously. Example packages published at the time of writing (a snapshot,
+not the full catalog):
 
 | project | version |
 | --- | --- |
@@ -48,6 +64,12 @@ PKGX_DIST=oci://ghcr.io/go-pkgx/packages PKGX_VERIFY=1 pkgm install lz4.org
 
 `PKGX_VERIFY=1` is fail-closed: an unsigned or badly-signed package is refused, not
 installed. See [supply chain](supply-chain.md) for the verification model.
+
+Or consume the same packages from the GitHub Pages pkgx-dist mirror:
+
+```sh
+PKGX_DIST=https://go-pkgx.github.io/packages pkgm install lz4.org
+```
 
 Packages are OCI artifacts, so any OCI client can also pull them directly:
 

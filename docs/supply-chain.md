@@ -5,10 +5,10 @@ needed to audit and trust it. Three artifacts are attached to each package as **
 referrers**, so they travel with the image and are discoverable from its digest:
 
 - a **CycloneDX SBOM** — the package's components and versions
-  ([`go-pkgx/sbom`](https://github.com/go-pkgx/sbom));
+  ([`go-attest/sbom`](https://github.com/go-attest/sbom));
 - an in-toto **SLSA provenance** statement — how and from what the package was built;
 - a **cosign-style + minisign signature** over the package
-  ([`go-pkgx/sign`](https://github.com/go-pkgx/sign)).
+  ([`go-attest/sign`](https://github.com/go-attest/sign)).
 
 ## The pinned key
 
