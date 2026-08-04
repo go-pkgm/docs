@@ -2,7 +2,7 @@
 
 [`ghcr.io/go-pkgx/packages`](https://github.com/go-pkgx/packages) is a pure-Go
 package factory: it builds [pkgx pantry](https://github.com/pkgxdev/pantry)
-recipes and publishes **signed, attested bottles** as OCI artifacts.
+recipes and publishes **signed, attested packages** as OCI artifacts.
 
 ## The factory
 
@@ -25,7 +25,7 @@ dependency-free leaves toward the full pantry.
 
 ## What is published
 
-Bottles are ordinary OCI artifacts — each with a signature, an SBOM, and a
+Packages are ordinary OCI artifacts — each with a signature, an SBOM, and a
 provenance statement attached as [referrers](supply-chain.md). Because the daily
 cron keeps adding recipes, treat the published set as a moving target. Live at the
 time of writing:
@@ -46,10 +46,10 @@ Point the go-pkgx tools at the registry and verify against the pinned key:
 PKGX_DIST=oci://ghcr.io/go-pkgx/packages PKGX_VERIFY=1 pkgm install lz4.org
 ```
 
-`PKGX_VERIFY=1` is fail-closed: an unsigned or badly-signed bottle is refused, not
+`PKGX_VERIFY=1` is fail-closed: an unsigned or badly-signed package is refused, not
 installed. See [supply chain](supply-chain.md) for the verification model.
 
-Bottles are OCI artifacts, so any OCI client can also pull them directly:
+Packages are OCI artifacts, so any OCI client can also pull them directly:
 
 ```sh
 docker pull ghcr.io/go-pkgx/packages/lz4.org:1.10.0

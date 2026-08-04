@@ -1,7 +1,7 @@
 # go-pkgx
 
 A **dependency-free, pure-Go** (`CGO_ENABLED=0`) package manager for
-[pkgx](https://pkgx.sh) bottles — a single static binary that installs **and
+[pkgx](https://pkgx.sh) packages — a single static binary that installs **and
 runs** packages on a `FROM scratch` image, with no runtime dependencies of its
 own.
 
@@ -29,7 +29,7 @@ pkgm pin          <pkg>@version ...     install pinned to an exact version
 pkgm run|x        <pkg> [-- args...]    run a pkg (works FROM scratch)
 
 flags: -h/--help  -v/--version  -p/--pin  -P/--prefix DIR  -s/--from-scratch
-env:   PKGX_DIR   bottle store (default: ~/.pkgx)
+env:   PKGX_DIR   package store (default: ~/.pkgx)
        PKGM_PREFIX default install prefix (ideal for FROM scratch)
 ```
 

@@ -1,12 +1,12 @@
-# pkgx Windows bottles — feasibility study & proposal
+# pkgx Windows packages — feasibility study & proposal
 
-**Date:** 2026-07-31 · pkgx has **no** Windows bottles today (every
+**Date:** 2026-07-31 · pkgx has **no** Windows packages today (every
 `dist.pkgx.dev/<project>/windows/*` returns 404). This studies whether that can
 change, with a working cross-build proof, and proposes a path.
 
 ## TL;DR
 
-Windows bottles are **feasible and, for most packages, simpler than the
+Windows packages are **feasible and, for most packages, simpler than the
 linux/darwin ones**. pkgx already ships the whole cross toolchain
 (`llvm.org/mingw-w64`). The blockers are (1) an upstream decision to build them
 and (2) a small runtime port of the client tools — not any deep technical wall.
@@ -20,29 +20,29 @@ and (2) a small runtime port of the client tools — not any deep technical wall
 | 3 | **Leaf tools bundle nothing.** The PE imports only Windows-provided DLLs — `api-ms-win-crt-*` (Universal CRT, present on Windows 10+) and `KERNEL32.dll`. | `objdump -p` import table |
 | 4 | **C++ can be fully self-contained.** `clang++ … -static` on a `<iostream>` program produces a PE whose only imports are Windows DLLs — **zero** bundled `libc++`/`libunwind`/`libwinpthread`. | `objdump -p hi-static.exe` |
 
-## Why Windows bottles are *simpler* than linux ones
+## Why Windows packages are *simpler* than linux ones
 
 The linux FROM-scratch work in this repo fought three things that **do not exist
 on Windows**:
 
-- **No glibc bottle.** Windows ships the C runtime (UCRT) as part of the OS.
+- **No glibc package.** Windows ships the C runtime (UCRT) as part of the OS.
   There is no `gnu.org/glibc` equivalent to mirror or to target.
 - **No rpath/RUNPATH dance.** Windows resolves DLLs from the executable's own
-  directory first, then `PATH`. A bottle just **colocates** any shared DLLs next
+  directory first, then `PATH`. A package just **colocates** any shared DLLs next
   to the `.exe` (or in a `lib/` dir put on `PATH`). No patchelf, no
   `--dynamic-linker`, no `$ORIGIN`.
 - **No loader indirection.** There is no `ld-linux` to invoke explicitly; you
   exec the PE directly.
 
-So the bottle shapes are:
+So the package shapes are:
 
 - **leaf C tool** → a single `.exe`, no bundled libs.
 - **C/C++ with static libs** (`-static`) → a single self-contained `.exe`.
-- **shared-lib deps** → the `.exe` + the dependency DLLs colocated in the bottle.
+- **shared-lib deps** → the `.exe` + the dependency DLLs colocated in the package.
 
 ## The two halves of "Windows support"
 
-**(A) Producing bottles** — an upstream (pkgxdev) concern. A pantry recipe would
+**(A) Producing packages** — an upstream (pkgxdev) concern. A pantry recipe would
 cross-build with `llvm.org/mingw-w64` on the existing linux CI, e.g.
 
 ```yaml
@@ -60,7 +60,7 @@ host, projects with no Windows story), so this is **per-recipe, opt-in** —
 exactly how darwin support already works. Pure-Go and Rust packages cross-compile
 to Windows almost for free.
 
-**(B) Consuming bottles** — the go-pkgx client side, which we control. **Done and
+**(B) Consuming packages** — the go-pkgx client side, which we control. **Done and
 proven on a real `windows-latest` runner** (go-pkgx v0.3.0):
 
 - `bottle.Exec` was `syscall.Exec` (UNIX-only; on Windows it's a stub returning
@@ -71,33 +71,33 @@ proven on a real `windows-latest` runner** (go-pkgx v0.3.0):
   closure's `bin`/`lib` dirs and exec the `.exe`.
 
 The CI job (`go-pkgx/pkgx`, `windows-latest`) builds `pkgx.exe`, fabricates a
-tiny Windows bottle (`hello.exe`) served over HTTP, and asserts that `pkgx.exe`
-**fetches and runs it** (`hello from pkgx bottle (win)`) **and propagates a
+tiny Windows package (`hello.exe`) served over HTTP, and asserts that `pkgx.exe`
+**fetches and runs it** (`hello from pkgx package (win)`) **and propagates a
 non-zero exit code** — both pass on real Windows. `mirror` already runs on
 Windows unchanged (pure file+http), so a Windows box can host a mirror today.
 
 Not yet done (follow-ups): `pkgm install` shims are `#!/bin/sh` (need `.cmd`);
 the colocated-DLL case (a non-static shared dep) isn't exercised because no such
-bottle exists yet.
+package exists yet.
 
 ## Proposal to pkgxdev
 
-1. Add `windows/x86-64` (+ `aarch64`) as first-class bottle slugs, built on the
+1. Add `windows/x86-64` (+ `aarch64`) as first-class package slugs, built on the
    existing linux CI via `llvm.org/mingw-w64`, **opt-in per recipe** (`platforms`
    includes `windows`), starting with the packages that cross-build trivially
    (Go/Rust tools, single-file C tools).
-2. Bottle relocatability on Windows = colocate DLLs (no rpath) — a much smaller
+2. Package relocatability on Windows = colocate DLLs (no rpath) — a much smaller
    brewkit change than the linux relocation logic.
 3. go-pkgx provides a reference pure-Go client (`pkgx`/`pkgm`) that consumes
-   Windows bottles, and `mirror` to host them — so the ecosystem is testable
+   Windows packages, and `mirror` to host them — so the ecosystem is testable
    independently of the reference Deno tooling.
 
 ## Honest limitations
 
-- Native-Windows consumption only helps once Windows bottles exist; until then,
-  **WSL2** remains the path for Windows users (linux binaries + linux bottles).
-- Packages whose upstreams have no Windows support won't get bottles — same
+- Native-Windows consumption only helps once Windows packages exist; until then,
+  **WSL2** remains the path for Windows users (linux binaries + linux packages).
+- Packages whose upstreams have no Windows support won't get packages — same
   opt-in reality as darwin.
 - go-pkgx's `run` closure-completion was built around ELF `DT_NEEDED`; the
   Windows equivalent (walking a PE import table for non-system DLLs) is a
-  separate, smaller feature if/when shared-DLL bottles appear.
+  separate, smaller feature if/when shared-DLL packages appear.

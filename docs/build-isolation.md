@@ -1,6 +1,6 @@
 # Build isolation
 
-Bottles are only as trustworthy as the environment that produced them. The factory
+Packages are only as trustworthy as the environment that produced them. The factory
 builds in two phases, one shipped and one experimental.
 
 ## Phase A — debian container (shipped)
@@ -13,12 +13,12 @@ GitHub-runner host. This gives:
   dependencies are present;
 - reproducible output across runs.
 
-This is the isolation model in use for every published bottle today.
+This is the isolation model in use for every published package today.
 
 ## Phase B — FROM-scratch pkgx-glibc toolchain (experimental)
 
 Phase A still links against the container's glibc. Phase B goes further: build against
-pkgx's **own** glibc toolchain so bottles are truly self-contained and run on a
+pkgx's **own** glibc toolchain so packages are truly self-contained and run on a
 literally-empty `FROM scratch` base with no system libc at all.
 
 This is a [`bk`](https://github.com/go-pkgx/bk) change, currently **experimental /
@@ -30,4 +30,4 @@ proven feasible** — not yet the default:
   [`bk/docs/from-scratch-toolchain.md`](https://github.com/go-pkgx/bk/blob/feat/pkgx-glibc-toolchain/docs/from-scratch-toolchain.md).
 
 See [Running pkgx packages on FROM scratch](from-scratch.md) for why a system-linked
-bottle needs closure completion to run on scratch, and what Phase B removes.
+package needs closure completion to run on scratch, and what Phase B removes.

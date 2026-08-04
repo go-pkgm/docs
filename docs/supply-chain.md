@@ -1,13 +1,13 @@
 # Supply chain
 
-Every bottle in [`ghcr.io/go-pkgx/packages`](registry.md) ships with the evidence
-needed to audit and trust it. Three artifacts are attached to each bottle as **OCI
+Every package in [`ghcr.io/go-pkgx/packages`](registry.md) ships with the evidence
+needed to audit and trust it. Three artifacts are attached to each package as **OCI
 referrers**, so they travel with the image and are discoverable from its digest:
 
-- a **CycloneDX SBOM** — the bottle's components and versions
+- a **CycloneDX SBOM** — the package's components and versions
   ([`go-pkgx/sbom`](https://github.com/go-pkgx/sbom));
-- an in-toto **SLSA provenance** statement — how and from what the bottle was built;
-- a **cosign-style + minisign signature** over the bottle
+- an in-toto **SLSA provenance** statement — how and from what the package was built;
+- a **cosign-style + minisign signature** over the package
   ([`go-pkgx/sign`](https://github.com/go-pkgx/sign)).
 
 ## The pinned key
@@ -26,8 +26,8 @@ consumer checks against this exact public key.
 The [`go-pkgx/bottle`](https://github.com/go-pkgx/bottle) backend that both `pkgx`
 and `pkgm` import performs verification at install time:
 
-- `bottle.VerifySignature` validates a bottle's signature against the pinned key.
-- Setting **`PKGX_VERIFY=1`** makes verification **fail-closed**: a bottle with no
+- `bottle.VerifySignature` validates a package's signature against the pinned key.
+- Setting **`PKGX_VERIFY=1`** makes verification **fail-closed**: a package with no
   signature, or one that does not verify, is **refused** rather than installed.
 
 ```sh
